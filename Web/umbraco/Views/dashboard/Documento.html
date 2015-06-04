@@ -1,15 +1,15 @@
 ﻿<script>
     function DocumentoController($scope, $routeParams, $http, assetsService) {
 
-        $http.get('/umbraco/growcreate/documento/getsitedetails')
+        /*$http.get('/umbraco/growcreate/documento/getsitedetails')
         .then(function (response) {
-            $scope.SiteDetails = response.data;
+            $scope.SiteDetails = response.data;            
+        });*/
 
-            $http.get('/umbraco/growcreate/documento/getdocs')
-                .then(function (docs) {
-                    $scope.DocTypes = docs.data;
-                });
-        });
+        $http.get('/umbraco/growcreate/documento/getdocs')
+            .then(function (docs) {
+                $scope.DocTypes = docs.data;
+            });
 
         $scope.showGroup = function(group){
             $scope.showAll = false;
@@ -62,8 +62,7 @@
 
 <div ng-controller="DocumentoController" class="gc">
     <div>
-        <p ng-if="SiteDetails && SiteDetails.SiteLogo" class="pull-right"><img class="logo" ng-src="{{ SiteDetails.SiteLogo }}" alt="{{ SiteDetails.SiteName }}" /></p>
-        <h3>Welcome to {{ 'the ' + SiteDetails.SiteName || 'your' }} back-office</h3>
+        <h3>Documento</h3>
         <p>Use the tree on the left to manage content. Your installation is made of the Document types and Properties listed below.</p>
         <br />
         <label for="showAll">

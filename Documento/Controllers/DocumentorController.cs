@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Umbraco.Web;
 using Umbraco.Web.Mvc;
 using Umbraco.Web.WebApi;
 using Umbraco.Core;
@@ -60,12 +61,13 @@ namespace GrowCreate.Plugins
 
         public SiteDetails GetSiteDetails()
         {
-            var root = Umbraco.TypedContentAtRoot().SingleOrDefault();
+            var helper = new Umbraco.Web.UmbracoHelper(UmbracoContext.Current);
+            var root = helper.TypedContentAtRoot().FirstOrDefault();
 
             return new SiteDetails()
             {
-                SiteName = root.GetProperty("siteName") == null ? "" : root.GetProperty("siteName").Value.ToString(),
-                SiteLogo = root.GetProperty("siteLogo") == null ? "" : Umbraco.TypedMedia(root.GetProperty("siteLogo").Value.ToString()).Url
+                SiteName = root == null || !root.HasProperty("siteName") ? "" : root.GetProperty("siteName").Value.ToString(),
+                SiteLogo = root == null || !root.HasProperty("siteLogo") ? "" : Umbraco.TypedMedia(root.GetProperty("siteLogo").Value.ToString()).Url
             };
         }
     }

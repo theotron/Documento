@@ -163,8 +163,8 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(ProjectDir)bin\$(TargetName).*" "C:/Websites/Documentor/Web/bin" /Y
-XCOPY "$(ProjectDir)Views\$(TargetName).*" "C:/Websites/Documentor/Web/Umbraco/Views/dashboard" /Y</PostBuildEvent>
+    <PostBuildEvent>XCOPY "$(ProjectDir)bin\$(TargetName).*" "C:/Websites/Documento/Web/bin" /Y
+XCOPY "$(ProjectDir)Views\$(TargetName).*" "C:/Websites/Documento/Web/Umbraco/Views/dashboard" /Y</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
