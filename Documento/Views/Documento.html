@@ -3,17 +3,18 @@
 
         /*$http.get('/umbraco/growcreate/documento/getsitedetails')
         .then(function (response) {
-            $scope.SiteDetails = response.data;            
+            $scope.SiteDetails = response.data;
         });*/
 
         $http.get('/umbraco/growcreate/documento/getdocs')
             .then(function (docs) {
                 $scope.DocTypes = docs.data;
+                //console.log(docs.data);
             });
 
-        $scope.showGroup = function(group){
+        $scope.showGroup = function (group) {
             $scope.showAll = false;
-            $scope.show = $scope.show == group.Name ? '' : group.Name;
+            $scope.show = $scope.show == group.name ? '' : group.name;
         }
 
     }
@@ -37,9 +38,9 @@
         margin: 0;
     }
 
-    .gc-repeated p i {
-        margin-right: 5px;
-    }
+        .gc-repeated p i {
+            margin-right: 5px;
+        }
 
     .gc-repeated table {
         margin: 10px 0;
@@ -57,7 +58,6 @@
     .gc .logo {
         max-height: 20px;
     }
-
 </style>
 
 <div ng-controller="DocumentoController" class="gc">
@@ -74,11 +74,11 @@
     <div class="row">
         <div ng-repeat="type in DocTypes" class="gc-repeated" ng-class="show == type.Name || showAll ? 'gc-active' : ''">
             <a ng-click="showGroup(type)">
-                <i class="icon" ng-class="show == type.Name ? 'icon-navigation-down' : 'icon-navigation-right'"></i> <i class="{{ type.Icon }}"></i>
-                {{ type.Name }} &mdash; {{ type.Description }}
-                <span class="badge pull-right">{{ type.Count }}</span>
+                <i class="icon" ng-class="show == type.name ? 'icon-navigation-down' : 'icon-navigation-right'"></i> <i class="{{ type.icon }}"></i>
+                {{ type.name }} &mdash; {{ type.description }}
+                <span class="badge pull-right">{{ type.count }}</span>
             </a>
-            <table ng-if="(show == type.Name || showAll) && type.Properties.length" class="table table-condensed">
+            <table ng-if="(show == type.name || showAll) && type.properties.length" class="table table-condensed">
                 <thead>
                     <tr>
                         <th>Property</th>
@@ -87,14 +87,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="prop in type.Properties">
-                        <td>{{ prop.Name }}</td>
-                        <td>{{ prop.Type }}</td>
-                        <td>{{ prop.Description }}</td>
+                    <tr ng-repeat="prop in type.properties">
+                        <td>{{ prop.name }}</td>
+                        <td>{{ prop.type }}</td>
+                        <td>{{ prop.description }}</td>
                     </tr>
                 </tbody>
             </table>
-            <p ng-if="(show == type || showAll) && !type.Properties.length"><br /><small>This document type has no properties.</small></p>
+            <p ng-if="(show == type || showAll) && !type.properties.length"><br /><small>This document type has no properties.</small></p>
         </div>
     </div>
     <p><br /><a href="https://our.umbraco.org/projects/website-utilities/umbraco-7-editors-manual" target="_blank" class="btn"><i class="icon icon-download"></i> Download Umbraco 7 editor guide</a></p>

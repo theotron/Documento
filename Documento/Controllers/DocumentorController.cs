@@ -16,14 +16,14 @@ namespace GrowCreate.Plugins
 {
     public class Docs
     {
-        public int NodeId { get; set; }
-        public string Name { get; set; }
-        public string Alias { get; set; }
-        public string Description { get; set; }
-        public string Icon { get; set; }
-        public string Type { get; set; }
-        public int Count { get; set; }
-        public IEnumerable<Docs> Properties { get; set; }
+        public int nodeId { get; set; }
+        public string name { get; set; }
+        public string alias { get; set; }
+        public string description { get; set; }
+        public string icon { get; set; }
+        public string type { get; set; }
+        public int count { get; set; }
+        public IEnumerable<Docs> properties { get; set; }
     }
 
     public class SiteDetails
@@ -38,23 +38,23 @@ namespace GrowCreate.Plugins
         public IEnumerable<Docs> GetDocs()
         {
             var db = ApplicationContext.Current.DatabaseContext.Database;
-            var types = db.Query<Docs>("select c.alias, c.nodeId, c.icon, c.description, n.text as name from cmsContentType c, umbracoNode n where c.nodeId = n.id and c.description <> ''").ToList().OrderBy(x => x.Name);
+            var types = db.Query<Docs>("select c.alias, c.nodeId, c.icon, c.description, n.text as name from cmsContentType c, umbracoNode n where c.nodeId = n.id and c.description <> ''").ToList().OrderBy(x => x.name);
 
             foreach (var type in types)
             {
                 var _props = new List<Docs>();
-                var props = db.Query<Docs>("select t.name, t.description, n.text as type from cmsPropertyType t, umbracoNode n where t.contentTypeId = @0 and t.dataTypeId = n.id", type.NodeId).ToList();
+                var props = db.Query<Docs>("select t.name, t.description, n.text as type from cmsPropertyType t, umbracoNode n where t.contentTypeId = @0 and t.dataTypeId = n.id", type.nodeId).ToList();
                 foreach (var prop in props)
                 {
                     _props.Add(new Docs()
                     {
-                        Name = prop.Name,
-                        Type = prop.Type,
-                        Description = prop.Description
+                        name = prop.name,
+                        type = prop.type,
+                        description = prop.description
                     });
                 }
-                type.Properties = _props;
-                type.Count = umbraco.uQuery.GetNodesByType(type.Alias).Count();
+                type.properties = _props;
+                type.count = umbraco.uQuery.GetNodesByType(type.alias).Count();
             }
             return types;
         }
